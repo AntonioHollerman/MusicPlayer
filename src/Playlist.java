@@ -4,11 +4,13 @@ public class Playlist {
     private String playlistName;
     private String imgPath;
     private final int playlistId;
+    private final int folderId;
 
-    public Playlist(String playlistName, String imgPath, int playlistId) {
+    public Playlist(String playlistName, String imgPath, int playlistId, int folderId) {
         this.playlistName = playlistName;
         this.imgPath = imgPath;
         this.playlistId = playlistId;
+        this.folderId = folderId;
     }
 
     public String getPlaylistName() {
@@ -21,6 +23,9 @@ public class Playlist {
 
     public int getPlaylistId() {
         return playlistId;
+    }
+    public int getFolderId(){
+        return folderId;
     }
     public Song[] getSongArr(){
         return songArr;
