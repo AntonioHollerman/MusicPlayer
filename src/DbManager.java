@@ -44,4 +44,16 @@ public class DbManager {
     public void deleteFolder(int folderId){
 
     }
+    public void setNextId(String idName, int nextId){
+
+    }
+    public void setSongName(int songId, String songName){
+
+    }
+    public void setPlaylistName(int playlistId, String playlistName){
+
+    }
+    public void setFolderName(int folderId, String folderName){
+
+    }
 }
