@@ -1,4 +1,6 @@
 public class DbManager {
+    private static final String SONGS_FOLDER_PATH = "SongsFolder\\";
+    private static final String IMAGES_FOLDER_PATH = "ImagesFolder\\";
     public Folder[] getFolders(){
         return null;
     }
