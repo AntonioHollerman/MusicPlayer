@@ -1,5 +1,6 @@
+import java.util.ArrayList;
 public class Playlist {
-    private Song[] songArr;
+    private ArrayList<Song> songArr = new ArrayList<>();
     private int curSongIndex;
     private String playlistName;
     private String imgPath;
@@ -27,7 +28,7 @@ public class Playlist {
     public int getFolderId(){
         return folderId;
     }
-    public Song[] getSongArr(){
+    public ArrayList<Song> getSongArr(){
         return songArr;
     }
 

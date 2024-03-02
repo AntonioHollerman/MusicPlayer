@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 public class Folder {
     private final int id;
     private String folderName;
-    private Playlist[] playlistArr;
-    private Folder[] folderArr;
-    private Folder prevFolder;
+    private ArrayList<Playlist> playlistArr;
+    private ArrayList<Folder> folderArr;
+    private final Folder prevFolder;
 
     public Folder(int id, String folderName, Folder prevFolder) {
         this.id = id;
@@ -22,11 +23,11 @@ public class Folder {
         return folderName;
     }
 
-    public Playlist[] getPlaylistArr() {
+    public ArrayList<Playlist> getPlaylistArr() {
         return playlistArr;
     }
 
-    public Folder[] getFolderArr() {
+    public ArrayList<Folder> getFolderArr() {
         return folderArr;
     }
 

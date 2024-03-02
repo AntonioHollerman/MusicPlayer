@@ -1,16 +1,18 @@
+import java.util.ArrayList;
+
 public class DbManager {
     private static final String SONGS_FOLDER_PATH = "SongsFolder\\";
     private static final String IMAGES_FOLDER_PATH = "ImagesFolder\\";
-    public Folder[] getFolders(){
+    public ArrayList<Folder> getFolders(){
         return null;
     }
-    public Folder[] getFolders(int folderId){
+    public ArrayList<Folder> getFolders(int folderId){
         return null;
     }
-    public Playlist[] getPlaylists(int folderId){
+    public ArrayList<Playlist> getPlaylists(int folderId){
         return null;
     }
-    public Song[] getSongs(int playlistId){
+    public ArrayList<Song> getSongs(int playlistId){
         return null;
     }
     public String getImgPath(int imgId){
