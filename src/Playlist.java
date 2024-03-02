@@ -54,6 +54,9 @@ public class Playlist {
     public void addSong(Song newSong){
 
     }
+    public void addSong(ArrayList<Song> newSongs){
+
+    }
     public void startPlaylist(int songId){
 
     }
