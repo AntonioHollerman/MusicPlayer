@@ -1,9 +1,11 @@
-import java.util.ArrayList;
+package music;
+
+import java.util.List;
 public class Folder {
     private final int id;
     private String folderName;
-    private ArrayList<Playlist> playlistArr;
-    private ArrayList<Folder> folderArr;
+    private List<Playlist> playlistArr;
+    private List<Folder> folderArr;
     private final Folder prevFolder;
 
     public Folder(int id, String folderName, Folder prevFolder) {
@@ -23,11 +25,11 @@ public class Folder {
         return folderName;
     }
 
-    public ArrayList<Playlist> getPlaylistArr() {
+    public List<Playlist> getPlaylistArr() {
         return playlistArr;
     }
 
-    public ArrayList<Folder> getFolderArr() {
+    public List<Folder> getFolderArr() {
         return folderArr;
     }
 
@@ -50,4 +52,5 @@ public class Folder {
     public void deleteFolder(){
 
     }
+    
 }

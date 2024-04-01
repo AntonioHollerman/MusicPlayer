@@ -1,3 +1,5 @@
+package music;
+
 public class Song {
     private String songPath;
     private String imgPath;

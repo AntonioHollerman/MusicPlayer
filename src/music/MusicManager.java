@@ -1,3 +1,5 @@
+package music;
+
 public class MusicManager {
     private Folder curFolder;
     public MusicManager(){
