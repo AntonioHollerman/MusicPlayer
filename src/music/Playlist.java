@@ -1,7 +1,7 @@
 package music;
 
 import java.util.List;
-public class Playlist {
+public class Playlist implements Editable{
     private List<Song> songArr;
     private int curSongIndex;
     private String playlistName;
@@ -63,6 +63,36 @@ public class Playlist {
 
     }
     public void startPlaylist(){
+
+    }
+
+    /**
+     * Sets the title of the editable object
+     *
+     * @param Text replaces current playlist title
+     */
+    @Override
+    public void setTitle(String Text) {
+
+    }
+
+    /**
+     * Sets the icon of the editable object.
+     *
+     * @param path the path to the icon file
+     */
+    @Override
+    public void setIcon(String path) {
+
+    }
+
+    /**
+     * Deletes the editable object.
+     *
+     * <p> This method deletes the object, from the folder or playlist it is in.
+     */
+    @Override
+    public void delete() {
 
     }
 }
