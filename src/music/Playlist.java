@@ -1,7 +1,7 @@
 package music;
 
 import java.util.List;
-public class Playlist implements Editable{
+public final class Playlist implements Editable{
     private List<Song> songArr;
     private int curSongIndex;
     private String playlistName;

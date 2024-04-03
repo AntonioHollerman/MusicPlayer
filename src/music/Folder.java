@@ -1,7 +1,7 @@
 package music;
 
 import java.util.List;
-public class Folder implements Editable{
+public final class Folder implements Editable{
     private final int id;
     private String folderName;
     private List<Playlist> playlistArr;

@@ -1,6 +1,6 @@
 package music;
 
-public interface Editable {
+public sealed interface Editable permits Song, Playlist, Folder {
     /**
      * Sets the title of the editable object*/
     void setTitle(String Text);

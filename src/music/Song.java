@@ -1,6 +1,6 @@
 package music;
 
-public class Song implements Editable{
+public final class Song implements Editable{
     private String songPath;
     private String imgPath;
     private final int id;
