@@ -4,9 +4,14 @@ import music.*;
 
 import java.util.List;
 
+/**
+ * Contains all the needed methods for a database manager
+ * <p>
+ * Main purpose is to make switching between SQLite and MySQL easier
+ */
 public abstract class DbManager {
-    private static final String SONGS_FOLDER_PATH = "SongsFolder\\";
-    private static final String IMAGES_FOLDER_PATH = "ImagesFolder\\";
+    public static final String SONGS_FOLDER_PATH = "SongsFolder\\";
+    public static final String IMAGES_FOLDER_PATH = "ImagesFolder\\";
 
     /**
      * Retrieves all folders

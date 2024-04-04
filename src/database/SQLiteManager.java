@@ -5,7 +5,10 @@ import music.Playlist;
 import music.Song;
 
 import java.util.List;
-
+/**
+ * The MySQLManager class extends the DbManager class and provides methods for interacting with and connecting to
+ * a SQLite database.
+ */
 public class SQLiteManager extends DbManager{
     /**
      * Retrieves all folders

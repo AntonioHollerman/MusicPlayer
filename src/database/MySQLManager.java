@@ -6,6 +6,10 @@ import music.Song;
 
 import java.util.List;
 
+/**
+ * The MySQLManager class extends the DbManager class and provides methods for interacting with and connecting to
+ * a MySQL database.
+ */
 public class MySQLManager extends DbManager{
     /**
      * Retrieves all folders
