@@ -1,55 +1,119 @@
 package music;
 
+import java.util.ArrayList;
 import java.util.List;
+
 public final class Folder implements Editable{
     private final int id;
     private String folderName;
-    private List<Playlist> playlistArr;
-    private List<Folder> folderArr;
+    private final List<Playlist> playlistArr;
+    private final List<Folder> folderArr;
     private final Folder prevFolder;
 
+    /**
+     * The Folder class represents a folder that can contain playlists and sub-folders.
+     */
     public Folder(int id, String folderName, Folder prevFolder) {
         this.id = id;
         this.folderName = folderName;
         this.prevFolder = prevFolder;
+        playlistArr = new ArrayList<>();
+        folderArr = new ArrayList<>();
     }
     public Folder(int id, String folderName){
         this(id, folderName, null);
     }
 
+    /**
+     * Returns the ID of this Folder.
+     *
+     * @return the ID of this Folder.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Returns the name of the folder.
+     *
+     * @return the name of the folder
+     */
     public String getFolderName() {
         return folderName;
     }
 
+    /**
+     * Returns the list of playlists in the current folder.
+     *
+     * @return the list of playlists in the current folder
+     */
     public List<Playlist> getPlaylistArr() {
         return playlistArr;
     }
 
+    /**
+     * Retrieves the list of folders contained within the current folder.
+     *
+     * @return a list of Folder objects contained within the current folder.
+     */
     public List<Folder> getFolderArr() {
         return folderArr;
     }
 
-    public Folder getPrevFolder() {
+    /**
+     * Returns the parent folder of the current folder.
+     *
+     * @return the parent folder of the current folder
+     */
+    public Folder getParentFolder() {
         return prevFolder;
     }
 
+    /**
+     * Sets the name of the folder.
+     *
+     * @param folderName the new name of the folder
+     */
     public void setFolderName(String folderName) {
         this.folderName = folderName;
     }
+
+    /**
+     * Creates a new playlist in the current folder.
+     *
+     * <p> The playlist is added to the playlistArr list of the current folder.
+     */
     public void createPlaylist(){
 
     }
+
+    /**
+     * Creates a new folder in the current folder.
+     *
+     * <p>
+     * This method creates a new folder within the current folder. The new folder will be added
+     * to the folderArr list of the current folder.
+     * </p>
+     */
     public void createFolder(){
 
     }
-    public void removePlaylist(){
+
+    /**
+     * Removes a playlist from the current folder.
+     *
+     * @param id the ID of the playlist to be removed
+     */
+    public void removePlaylist(int id){
 
     }
-    public void removeFolder(){
+
+    /**
+     * Removes a folder with the given ID from the current folder.
+     *
+     * @param id the ID of the folder to be removed
+     */
+    public void removeFolder(int id){
 
     }
 

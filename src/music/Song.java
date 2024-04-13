@@ -7,6 +7,13 @@ public final class Song implements Editable{
     private String title;
     private boolean isPlaying;
 
+    /**
+     * The Song class represents a song object that can be played.
+     *
+     * <p>
+     * A song has a path to the audio file along with an optional image path, ID, and title.
+     * </p>
+     */
     public Song(String songPath, String imgPath, int id, String title) {
         this.songPath = songPath;
         this.imgPath = imgPath;
@@ -14,6 +21,11 @@ public final class Song implements Editable{
         this.title = title;
     }
 
+    /**
+     * Retrieves the path of the song.
+     *
+     * @return the path of the song
+     */
     public String getSongPath() {
         return songPath;
     }
