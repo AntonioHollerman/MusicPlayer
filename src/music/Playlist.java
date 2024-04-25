@@ -1,16 +1,15 @@
 package music;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Nullable;
+import database.DbManager;
+import main.Main;
 
+import java.util.ArrayList;
 import java.util.List;
-public final class Playlist implements Editable{
-    private List<Song> songArr;
-    private int curSongIndex;
-    private String playlistName;
-    private String imgPath;
-    private final int playlistId;
+public final class Playlist extends Content implements ContentContainer{
+    private final List<Song> songList;
     private final int folderId;
+    private DbManager dbConn = Main.DB_CONNECTION;
+
 
     /**
      * The Playlist class represents a playlist object that can contain songs.
@@ -18,38 +17,17 @@ public final class Playlist implements Editable{
      * <p>
      * A playlist has a name, an image path, a playlist ID, and a folder ID. It can also contain an array of songs.
      */
-    public Playlist(String playlistName, String imgPath, int playlistId, int folderId) {
-        this.playlistName = playlistName;
-        this.imgPath = imgPath;
-        this.playlistId = playlistId;
+    public Playlist(String playlistName, String imgPath, int playlistId, int folderId, List<Song> songList) {
+        super(ContentType.PLAYLIST, imgPath, playlistName, playlistId);
         this.folderId = folderId;
+        this.songList = songList;
     }
-
-    /**
-     * Returns the name of the playlist.
-     *
-     * @return the name of the playlist
-     */
-    public String getPlaylistName() {
-        return playlistName;
-    }
-
-    /**
-     * Retrieves the image path of the playlist or song.
-     *
-     * @return the image path of the playlist or song
-     */
-    public String getImgPath() {
-        return imgPath;
-    }
-
-    /**
-     * Returns the playlist ID.
-     *
-     * @return the playlist ID
-     */
-    public int getPlaylistId() {
-        return playlistId;
+    public Playlist(String playlistName, int folderId){
+        this(playlistName,
+                Main.DB_CONNECTION.getDefaultImgPath(),
+                Main.DB_CONNECTION.getNextPlaylistId(),
+                folderId,
+                new ArrayList<>());
     }
 
     /**
@@ -59,33 +37,6 @@ public final class Playlist implements Editable{
      */
     public int getFolderId(){
         return folderId;
-    }
-
-    /**
-     * Retrieves the array of songs in the playlist.
-     *
-     * @return the array of songs in the playlist
-     */
-    public List<Song> getSongArr(){
-        return songArr;
-    }
-
-    /**
-     * Sets the name of the playlist.
-     *
-     * @param playlistName the new name of the playlist
-     */
-    public void setPlaylistName(String playlistName) {
-        this.playlistName = playlistName;
-    }
-
-    /**
-     * Sets the image path of the playlist or song.
-     *
-     * @param imgPath the new image path to be set
-     */
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
     }
 
     /**
@@ -200,6 +151,34 @@ public final class Playlist implements Editable{
      */
     @Override
     public void delete() {
+
+    }
+
+    /**
+     * Retrieves the contents of the container.
+     *
+     * @return An array of Content objects representing the contents of the container.
+     */
+    @Override
+    public Content[] getContent() {
+        return songList.toArray(new Content[0]);
+    }
+
+    /**
+     * Sets the path to the content icon image.
+     *
+     * @return The new path to the content icon image.
+     */
+    @Override
+    public String setIconPath() {
+        return "";
+    }
+
+    /**
+     * Sets the title for the content.
+     */
+    @Override
+    public void setTitle() {
 
     }
 }

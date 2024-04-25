@@ -6,7 +6,7 @@ package music;
  * <p>
  * Main purpose is to be used in EditPanel in gui package to use the panel to edit Folders, Playlists, and Songs
  */
-public sealed interface Editable permits Song, Playlist, Folder {
+public sealed interface Editable permits Content {
     /**
      * Sets the title of the editable object*/
     void setTitle(String Text);

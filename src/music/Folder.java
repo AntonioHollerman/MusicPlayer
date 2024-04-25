@@ -1,63 +1,30 @@
 package music;
 
+import database.DbManager;
+import main.Main;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Folder implements Editable{
-    private final int id;
-    private String folderName;
-    private final List<Playlist> playlistArr;
-    private final List<Folder> folderArr;
+public final class Folder extends Content implements ContentContainer{
+    private final List<Content> contentList;
     private final Folder prevFolder;
+    private DbManager dbConn = Main.DB_CONNECTION;
 
     /**
      * The Folder class represents a folder that can contain playlists and sub-folders.
      */
-    public Folder(int id, String folderName, Folder prevFolder) {
-        this.id = id;
-        this.folderName = folderName;
+    public Folder(int id, String folderName, String imgPath, Folder prevFolder, List<Content> contentList) {
+        super(ContentType.FOLDER, imgPath, folderName, id);
         this.prevFolder = prevFolder;
-        playlistArr = new ArrayList<>();
-        folderArr = new ArrayList<>();
+        this.contentList = contentList;
     }
-    public Folder(int id, String folderName){
-        this(id, folderName, null);
-    }
-
-    /**
-     * Returns the ID of this Folder.
-     *
-     * @return the ID of this Folder.
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Returns the name of the folder.
-     *
-     * @return the name of the folder
-     */
-    public String getFolderName() {
-        return folderName;
-    }
-
-    /**
-     * Returns the list of playlists in the current folder.
-     *
-     * @return the list of playlists in the current folder
-     */
-    public List<Playlist> getPlaylistArr() {
-        return playlistArr;
-    }
-
-    /**
-     * Retrieves the list of folders contained within the current folder.
-     *
-     * @return a list of Folder objects contained within the current folder.
-     */
-    public List<Folder> getFolderArr() {
-        return folderArr;
+    public Folder(Folder prevFolder, String folderName){
+        this(Main.DB_CONNECTION.getNextFolderId(),
+                folderName,
+                Main.DB_CONNECTION.getDefaultImgPath(),
+                prevFolder,
+                new ArrayList<>());
     }
 
     /**
@@ -69,14 +36,6 @@ public final class Folder implements Editable{
         return prevFolder;
     }
 
-    /**
-     * Sets the name of the folder.
-     *
-     * @param folderName the new name of the folder
-     */
-    public void setFolderName(String folderName) {
-        this.folderName = folderName;
-    }
 
     /**
      * Creates a new playlist in the current folder.
@@ -144,6 +103,34 @@ public final class Folder implements Editable{
      */
     @Override
     public void delete() {
+
+    }
+
+    /**
+     * Retrieves the contents of the container.
+     *
+     * @return An array of Content objects representing the contents of the container.
+     */
+    @Override
+    public Content[] getContent() {
+        return contentList.toArray(new Content[0]);
+    }
+
+    /**
+     * Sets the path to the content icon image.
+     *
+     * @return The new path to the content icon image.
+     */
+    @Override
+    public String setIconPath() {
+        return "";
+    }
+
+    /**
+     * Sets the title for the content.
+     */
+    @Override
+    public void setTitle() {
 
     }
 }
