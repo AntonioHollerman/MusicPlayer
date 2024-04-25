@@ -65,6 +65,16 @@ public class SQLiteManager extends DbManager{
     }
 
     /**
+     * Retrieves the default image path.
+     *
+     * @return the default image path as a {@code String}
+     */
+    @Override
+    public String getDefaultImgPath() {
+        return "";
+    }
+
+    /**
      * Retrieves the ID for the next song to be added.
      *
      * @return the ID for the next song to be added.
