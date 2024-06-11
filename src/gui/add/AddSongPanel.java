@@ -1,7 +1,7 @@
-package gui;
+package gui.add;
 
 public class AddSongPanel {
-    private static class TopPanel extends SelectPanel{
+    private static class TopPanel extends SelectPanel {
 
     }
     private static class BottomPanel extends SearchPanel {

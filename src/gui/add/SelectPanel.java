@@ -1,4 +1,4 @@
-package gui;
+package gui.add;
 
 public class SelectPanel {
 }

@@ -1,4 +1,6 @@
-package music;
+package main;
+
+import music.Folder;
 
 public class MusicManager {
     private Folder curFolder;

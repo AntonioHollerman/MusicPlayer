@@ -1,4 +1,4 @@
-package gui;
+package gui.player;
 
 /**
  * play and display song being played
