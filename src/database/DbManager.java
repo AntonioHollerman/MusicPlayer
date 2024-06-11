@@ -53,6 +53,13 @@ public abstract class DbManager {
     public abstract String getImgPath(int imgId);
 
     /**
+     * Retrieves the default image path.
+     *
+     * @return the default image path as a {@code String}
+     */
+    public abstract String getDefaultImgPath();
+
+    /**
      * Retrieves the ID for the next song to be added.
      *
      * @return the ID for the next song to be added.

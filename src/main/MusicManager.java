@@ -4,22 +4,36 @@ import music.Folder;
 
 public class MusicManager {
     private Folder curFolder;
+
+    /**
+     * Initialize and organizes folders, playlist, and songs
+     */
     public MusicManager(){
 
     }
-    public void swapFolder(){
+
+    /**
+     * Changes working folder to a direct sub or parent folder
+     */
+    public void swapFolder(int folderId){
 
     }
-    public void selectPlaylist(){
+
+    /**
+     * Changes the name of the given folder.
+     *
+     * @param folder the folder whose name needs to be changed
+     */
+    public void changeFolderName(Folder folder){
 
     }
-    public void exitPlaylist(){
 
-    }
-    public void changeFolderName(){
-
-    }
-    public void changePlaylistName(){
+    /**
+     * Changes the name of the given playlist.
+     *
+     * @param playlist the playlist whose name needs to be changed
+     */
+    public void changePlaylistName(Playlist playlist){
 
     }
 }
