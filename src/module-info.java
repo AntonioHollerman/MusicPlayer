@@ -1,0 +1,2 @@
+module MusicPlayer {
+}
