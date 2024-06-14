@@ -5,6 +5,7 @@ import records.FolderRow;
 import records.PlaylistRow;
 import records.SongRow;
 
+import java.io.IOException;
 import java.util.List;
 /**
  * The MySQLManager class extends the DbManager class and provides methods for interacting with and connecting to
@@ -239,6 +240,24 @@ public class SQLiteManager extends DbManager {
      */
     @Override
     public void setFolderName(int folderId, String folderName) {
+
+    }
+
+    /**
+     * Closes this stream and releases any system resources associated
+     * with it. If the stream is already closed then invoking this
+     * method has no effect.
+     *
+     * <p> As noted in {@link AutoCloseable#close()}, cases where the
+     * close may fail require careful attention. It is strongly advised
+     * to relinquish the underlying resources and to internally
+     * <em>mark</em> the {@code Closeable} as closed, prior to throwing
+     * the {@code IOException}.
+     *
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    public void close() throws IOException {
 
     }
 }
