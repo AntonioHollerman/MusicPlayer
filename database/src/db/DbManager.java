@@ -4,8 +4,6 @@ import records.SongRow;
 import records.PlaylistRow;
 
 import java.io.Closeable;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 
 
@@ -15,18 +13,10 @@ import java.util.List;
  * Main purpose is to make switching between SQLite and MySQL easier
  */
 public abstract class DbManager implements Closeable {
-    public static final String SONGS_FOLDER_PATH = "SongsFolder\\";
-    public static final String IMAGES_FOLDER_PATH = "ImagesFolder\\";
-    protected static final Map<Integer, String> imgMap = new HashMap<>();
-
     public static final DbManager DB_CONNECTION = new MySQLWrapper();
     private static class MySQLWrapper extends MySQLManager{}
     private static class SQLiteWrapper extends SQLiteManager{}
 
-    
-    public Map<Integer, String> getImgMap(){
-        return new HashMap<>(imgMap);
-    }
     /**
      * Retrieves all folders
      *
