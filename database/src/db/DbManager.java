@@ -4,6 +4,7 @@ import records.SongRow;
 import records.PlaylistRow;
 
 import java.io.Closeable;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -13,9 +14,14 @@ import java.util.List;
  * Main purpose is to make switching between SQLite and MySQL easier
  */
 public abstract class DbManager implements Closeable {
-    public static final DbManager DB_CONNECTION = new MySQLWrapper();
+    public static final DbManager DB_CONNECTION = new SQLiteWrapper();
     private static class MySQLWrapper extends MySQLManager{}
     private static class SQLiteWrapper extends SQLiteManager{}
+
+    /**
+     * Initialize database with tables
+     */
+    public abstract void createTables();
 
     /**
      * Retrieves all folders
@@ -177,4 +183,9 @@ public abstract class DbManager implements Closeable {
      * @param folderName the new name of the folder
      */
     public abstract void setFolderName(int folderId, String folderName);
+
+    public static void main(String[] args) throws IOException {
+        System.out.println("Hi");
+        DB_CONNECTION.close();
+    }
 }

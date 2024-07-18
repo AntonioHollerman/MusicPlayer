@@ -6,12 +6,40 @@ import records.PlaylistRow;
 import records.SongRow;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
+import java.nio.file.Path;
+
 /**
  * The MySQLManager class extends the DbManager class and provides methods for interacting with and connecting to
  * a SQLite database.
  */
 public class SQLiteManager extends DbManager {
+    private final Connection conn;
+    public SQLiteManager() {
+        Path abDbPath = Path.of("Music.db").toAbsolutePath();
+        boolean dbExists = Files.exists(abDbPath);
+        try{
+            conn = DriverManager.getConnection("jdbc:sqlite:C:\\JavaProjects\\MusicPlayer\\Music.db");
+            if (!dbExists){
+
+            }
+        } catch (SQLException e){
+            e.fillInStackTrace();
+            throw new RuntimeException("Connecting to database failed");
+        }
+    }
+
+    /**
+     * Initialize database with tables
+     */
+    @Override
+    public void createTables() {
+
+    }
 
     /**
      * Retrieves all folders
@@ -258,6 +286,10 @@ public class SQLiteManager extends DbManager {
      */
     @Override
     public void close() throws IOException {
-
+        try {
+            conn.close();
+        } catch (SQLException e){
+            e.fillInStackTrace();
+        }
     }
 }

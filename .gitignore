@@ -4,6 +4,7 @@ out/
 !**/src/test/**/out/
 .idea
 MusicPlayer.iml
+Config.properties
 ### Eclipse ###
 .apt_generated
 .classpath

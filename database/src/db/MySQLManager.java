@@ -5,14 +5,39 @@ import records.PlaylistRow;
 import records.SongRow;
 
 import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * The MySQLManager class extends the DbManager class and provides methods for interacting with and connecting to
  * a MySQL database.
  */
 public class MySQLManager extends DbManager {
+    private final Connection conn;
+    public MySQLManager() {
+        var config = ResourceBundle.getBundle("database.src.db.Config");
+        try{
+            conn = DriverManager.getConnection(
+                    config.getString("url"),
+                    config.getString("username"),
+                    config.getString("password")
+            );
+        } catch (SQLException e){
+            e.fillInStackTrace();
+            throw new RuntimeException("Connecting to database failed");
+        }
+    }
 
+    /**
+     * Initialize database with tables
+     */
+    @Override
+    public void createTables() {
+
+    }
 
     /**
      * Retrieves all folders
