@@ -5,6 +5,7 @@ import content.ContentContainer;
 import content.ContentType;
 import db.DbManager;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public final class Folder extends Content implements ContentContainer {
     /**
      * The Folder class represents a folder that can contain playlists and sub-folders.
      */
-    public Folder(int id, String folderName, String imgPath, Folder prevFolder, List<Content> contentList) {
+    public Folder(int id, String folderName, Path imgPath, Folder prevFolder, List<Content> contentList) {
         super(ContentType.FOLDER, imgPath, folderName, id);
         this.prevFolder = prevFolder;
         this.contentList = contentList;

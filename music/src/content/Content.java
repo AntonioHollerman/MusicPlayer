@@ -1,9 +1,11 @@
 package content;
 
+import java.nio.file.Path;
+
 public abstract non-sealed class Content implements Editable {
     private final ContentType type;
     private final int id;
-    protected String iconPath;
+    protected Path iconPath;
     protected String title;
 
     /**
@@ -12,7 +14,7 @@ public abstract non-sealed class Content implements Editable {
      * @param iconPath the path to the content image
      * @param title Title of the content
      */
-    public Content(ContentType type, String iconPath, String title, int id) {
+    public Content(ContentType type, Path iconPath, String title, int id) {
         this.type = type;
         this.iconPath = iconPath;
         this.title = title;
@@ -35,7 +37,7 @@ public abstract non-sealed class Content implements Editable {
      * get the current icon path
      * @return the String of the path to the icon image
      */
-    public final String getIconPath(){
+    public final Path getIconPath(){
         return iconPath;
     }
 
