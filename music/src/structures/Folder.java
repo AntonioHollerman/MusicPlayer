@@ -4,6 +4,7 @@ import content.Content;
 import content.ContentContainer;
 import content.ContentType;
 import db.DbManager;
+import db.DbService;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 public final class Folder extends Content implements ContentContainer {
     private final List<Content> contentList;
     private final Folder prevFolder;
-    private static final DbManager dbConn = DbManager.DB_CONNECTION;
+    private static final DbManager dbConn = DbService.DB_CONNECTION;
 
     /**
      * The Folder class represents a folder that can contain playlists and sub-folders.

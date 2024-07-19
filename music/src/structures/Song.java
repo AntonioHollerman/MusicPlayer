@@ -3,11 +3,14 @@ package structures;
 import content.Content;
 import content.ContentType;
 import db.DbManager;
+import db.DbService;
+
+import java.nio.file.Path;
 
 public final class Song extends Content {
     private String songPath;
     private boolean isPlaying;
-    private static final DbManager dbConn = DbManager.DB_CONNECTION;
+    private static final DbManager dbConn = DbService.DB_CONNECTION;
 
     /**
      * The Song class represents a song object that can be played.
@@ -16,7 +19,7 @@ public final class Song extends Content {
      * A song has a path to the audio file along with an optional image path, ID, and title.
      * </p>
      */
-    public Song(String songPath, String imgPath, String title, int id) {
+    public Song(String songPath, Path imgPath, String title, int id) {
         super(ContentType.SONG, imgPath, title, id);
         this.songPath = songPath;
         isPlaying = false;
