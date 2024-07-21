@@ -103,7 +103,7 @@ class FilesManager {
      */
     public static void removeSongOrImg(Path path){
         try {
-            Files.delete(path);
+            Files.deleteIfExists(path);
         } catch (IOException e){
             e.fillInStackTrace();
             throw new RuntimeException("Failed to delete file");

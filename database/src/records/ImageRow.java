@@ -1,4 +1,6 @@
 package records;
 
-public record ImageRow(int id, String imgPath) {
+import java.nio.file.Path;
+
+public record ImageRow(int id, Path imgPath) {
 }

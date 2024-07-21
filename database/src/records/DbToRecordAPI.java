@@ -1,5 +1,6 @@
 package records;
 
+import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class DbToRecordAPI {
                 rows.add(
                         new ImageRow(
                                 rs.getInt("id"),
-                                rs.getString("img_path")
+                                Path.of(rs.getString("img_path"))
                         )
                 );
             }
@@ -61,7 +62,7 @@ public class DbToRecordAPI {
                                 rs.getInt("id"),
                                 rs.getInt("img_id"),
                                 rs.getString("title"),
-                                rs.getString("song_path")
+                                Path.of(rs.getString("song_path"))
                         )
                 );
             }
