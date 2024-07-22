@@ -45,16 +45,6 @@ public final class Song extends Content {
     }
 
     /**
-     * Sets the path of the song.
-     *
-     * @param songPath the new path of the song
-     */
-    public void setSongPath(Path songPath) {
-        this.songPath = songPath;
-    }
-
-
-    /**
      * Starts playing the song audio.
      * This method does not return a value.
      * It modifies the state of the song or playlist by starting playback.
@@ -81,7 +71,7 @@ public final class Song extends Content {
      */
     @Override
     public void delete() {
-
+        dbConn.deleteSong(getId());
     }
 
 
@@ -92,18 +82,28 @@ public final class Song extends Content {
      */
     @Override
     public void setTitle(String newTitle) {
-
+        this.title = newTitle;
+        dbConn.setSongName(getId(), newTitle);
     }
 
     /**
-     * Sets the path to the content icon image.
+     * Add icon to file system then make icon the result of new Path
      *
      * @param newIcon path to new icon
      * @return The new path to the content icon image.
      */
     @Override
-    public String setIcon(String newIcon) {
-        return "";
+    public Path setIcon(Path newIcon) {
+        int imgId = dbConn.insertNewImage(newIcon);
+        this.iconPath = dbConn.getImgPath(imgId);
+        dbConn.setSongImg(getId(), imgId);
+        return this.iconPath;
     }
 
+    @Override
+    public Path setIcon(int imgId) {
+        this.iconPath = dbConn.getImgPath(imgId);
+        dbConn.setSongImg(getId(), imgId);
+        return dbConn.getImgPath(imgId);
+    }
 }

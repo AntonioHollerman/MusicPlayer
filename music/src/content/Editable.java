@@ -1,5 +1,7 @@
 package content;
 
+import java.nio.file.Path;
+
 /**
  * The Editable interface represents an object that can be edited, which includes
  * setting the title, setting the icon, and deleting the object from its container.
@@ -15,12 +17,13 @@ public sealed interface Editable permits Content {
     void setTitle(String newTitle);
 
     /**
-     * Sets the path to the content icon image.
+     * Add icon to file system then make icon the result of new Path
      *
      * @param newIcon path to new icon
      * @return The new path to the content icon image.
      */
-    String setIcon(String newIcon);
+    Path setIcon(Path newIcon);
+    Path setIcon(int imgId);
 
     /**
      * Deletes the editable object.

@@ -105,14 +105,23 @@ public final class Folder extends Content implements ContentContainer {
     }
 
     /**
-     * Sets the path to the content icon image.
+     * Add icon to file system then make icon the result of new Path
      *
      * @param newIcon path to new icon
      * @return The new path to the content icon image.
      */
     @Override
-    public String setIcon(String newIcon) {
-        return "";
+    public Path setIcon(Path newIcon) {
+        int imgId = dbConn.insertNewImage(newIcon);
+        this.iconPath = dbConn.getImgPath(imgId);
+        dbConn.setFolderImg(getId(), imgId);
+        return this.iconPath;
     }
 
+    @Override
+    public Path setIcon(int imgId) {
+        this.iconPath = dbConn.getImgPath(imgId);
+        dbConn.setFolderImg(getId(), imgId);
+        return dbConn.getImgPath(imgId);
+    }
 }
