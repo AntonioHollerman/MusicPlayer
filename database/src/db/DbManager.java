@@ -395,13 +395,24 @@ public class DbManager {
     /**
      * Deletes a song from a playlist.
      *
-     * @param songMappedId id for song mapped to a playlist
+     * @param songId id for song to be removed
+     * @param playlistId id of playlist to remove from
      */
     
-    public void deleteSongFromPlaylist(int songMappedId) {
-        String sql = "DELETE FROM songs_mapped WHERE id = ?";
+    public void deleteSongFromPlaylist(int songId, int playlistId) {
+        String sql = """
+                WITH cte AS (
+                    SELECT id
+                    FROM songs_mapped
+                    WHERE song_id = ? AND playlist_id = ?
+                    ORDER BY id
+                    LIMIT 1
+                )
+                DELETE FROM your_table
+                WHERE id IN (SELECT id FROM cte);""";
         try (PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setInt(1, songMappedId);
+            ps.setInt(1, songId);
+            ps.setInt(2, playlistId);
             ps.executeUpdate();
         } catch (SQLException e){
             e.fillInStackTrace();
