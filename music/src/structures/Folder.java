@@ -23,13 +23,6 @@ public final class Folder extends Content implements ContentContainer {
         this.prevFolder = prevFolder;
         this.contentList = contentList;
     }
-    public Folder(Folder prevFolder, String folderName){
-        this(dbConn.getNextFolderId(),
-                folderName,
-                dbConn.getDefaultImgPath(),
-                prevFolder,
-                new ArrayList<>());
-    }
 
     /**
      * Returns the parent folder of the current folder.

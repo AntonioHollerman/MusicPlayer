@@ -4,14 +4,14 @@ import content.Content;
 import content.ContentType;
 import db.DbManager;
 import db.DbService;
+import records.SongRow;
 
 import java.nio.file.Path;
 
 public final class Song extends Content {
-    private String songPath;
+    private Path songPath;
     private boolean isPlaying;
     private static final DbManager dbConn = DbService.DB_CONNECTION;
-
     /**
      * The Song class represents a song object that can be played.
      *
@@ -19,16 +19,10 @@ public final class Song extends Content {
      * A song has a path to the audio file along with an optional image path, ID, and title.
      * </p>
      */
-    public Song(String songPath, Path imgPath, String title, int id) {
-        super(ContentType.SONG, imgPath, title, id);
+    public Song(Path songPath, Path imgPath, String title, int songId) {
+        super(ContentType.SONG, imgPath, title, songId);
         this.songPath = songPath;
         isPlaying = false;
-    }
-    public Song(String title, String songPath){
-        this(songPath,
-                dbConn.getDefaultImgPath(),
-                title,
-                dbConn.getNextSongId());
     }
 
     /**
@@ -36,7 +30,7 @@ public final class Song extends Content {
      *
      * @return the path of the song
      */
-    public String getSongPath() {
+    public Path getSongPath() {
         return songPath;
     }
 
@@ -55,7 +49,7 @@ public final class Song extends Content {
      *
      * @param songPath the new path of the song
      */
-    public void setSongPath(String songPath) {
+    public void setSongPath(Path songPath) {
         this.songPath = songPath;
     }
 

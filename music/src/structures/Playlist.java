@@ -4,13 +4,11 @@ import content.Content;
 import content.ContentContainer;
 import content.ContentType;
 
+import java.nio.file.Path;
 import java.util.List;
 public final class Playlist extends Content implements ContentContainer {
     private List<Song> songArr;
     private int curSongIndex;
-    private String playlistName;
-    private String imgPath;
-    private final int playlistId;
     private final int folderId;
 
     /**
@@ -19,39 +17,9 @@ public final class Playlist extends Content implements ContentContainer {
      * <p>
      * A playlist has a name, an image path, a playlist ID, and a folder ID. It can also contain an array of songs.
      */
-    public Playlist(String playlistName, String imgPath, int playlistId, int folderId) {
+    public Playlist(String playlistName, Path imgPath, int playlistId, int folderId) {
         super(ContentType.PLAYLIST, imgPath, playlistName, playlistId);
-        this.playlistName = playlistName;
-        this.imgPath = imgPath;
-        this.playlistId = playlistId;
         this.folderId = folderId;
-    }
-
-    /**
-     * Returns the name of the playlist.
-     *
-     * @return the name of the playlist
-     */
-    public String getPlaylistName() {
-        return playlistName;
-    }
-
-    /**
-     * Retrieves the image path of the playlist or song.
-     *
-     * @return the image path of the playlist or song
-     */
-    public String getImgPath() {
-        return imgPath;
-    }
-
-    /**
-     * Returns the playlist ID.
-     *
-     * @return the playlist ID
-     */
-    public int getPlaylistId() {
-        return playlistId;
     }
 
     /**
@@ -70,24 +38,6 @@ public final class Playlist extends Content implements ContentContainer {
      */
     public List<Song> getSongArr(){
         return songArr;
-    }
-
-    /**
-     * Sets the name of the playlist.
-     *
-     * @param playlistName the new name of the playlist
-     */
-    public void setPlaylistName(String playlistName) {
-        this.playlistName = playlistName;
-    }
-
-    /**
-     * Sets the image path of the playlist or song.
-     *
-     * @param imgPath the new image path to be set
-     */
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
     }
 
     /**
