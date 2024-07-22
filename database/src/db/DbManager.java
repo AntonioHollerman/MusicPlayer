@@ -495,13 +495,50 @@ public class DbManager {
         }
     }
 
+    public void setSongImg(int songId, int imgId){
+        String sql = "UPDATE songs SET img_id = ? WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, songId);
+            ps.setInt(2, imgId);
+
+            ps.executeUpdate();
+        } catch (SQLException e){
+            e.fillInStackTrace();
+            throw new RuntimeException("Fail to set song image");
+        }
+    }
+
+    public void setPlaylistImg(int playlistId, int imgId){
+        String sql = "UPDATE playlists SET img_id = ? WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, playlistId);
+            ps.setInt(2, imgId);
+
+            ps.executeUpdate();
+        } catch (SQLException e){
+            e.fillInStackTrace();
+            throw new RuntimeException("Fail to set song image");
+        }
+    }
+
+    public void setFolderImg(int folderId, int imgId){
+        String sql = "UPDATE folders SET img_id = ? WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, folderId);
+            ps.setInt(2, imgId);
+
+            ps.executeUpdate();
+        } catch (SQLException e){
+            e.fillInStackTrace();
+            throw new RuntimeException("Fail to set song image");
+        }
+    }
     /**
      * Sets the name of a song identified by its songId.
      *
      * @param songId   the ID of the song
      * @param songName the new name of the song
      */
-    
     public void setSongName(int songId, String songName) {
         String sql = "UPDATE songs SET title = ? WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)){
@@ -521,7 +558,6 @@ public class DbManager {
      * @param playlistId   the ID of the playlist
      * @param playlistName the new name of the playlist
      */
-    
     public void setPlaylistName(int playlistId, String playlistName) {
         String sql = "UPDATE playlists SET playlist_name = ? WHERE id = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)){
