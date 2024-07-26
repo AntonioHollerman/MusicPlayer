@@ -17,13 +17,16 @@ public sealed interface Editable permits Content {
     void setTitle(String newTitle);
 
     /**
-     * Add icon to file system then make icon the result of new Path
-     *
-     * @param newIcon path to new icon
-     * @return The new path to the content icon image.
+     * Creates new icon image and sets icon id to it
+     * @param path path to new image to add
      */
-    Path setIcon(Path newIcon);
-    Path setIcon(int imgId);
+    void setIcon(Path path);
+
+    /**
+     * Updates content image path
+     * @param iconId The id of the image to set new icon to
+     */
+    void setIcon(int iconId);
 
     /**
      * Deletes the editable object.

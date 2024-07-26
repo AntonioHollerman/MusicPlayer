@@ -197,7 +197,6 @@ public class DbManager {
      * @param imgId the ID of the image
      * @return the image path for the specified image ID
      */
-    
     public Path getImgPath(int imgId) {
         String sql = "SELECT img_path FROM images WHERE id = ?";
         Path path;
@@ -379,7 +378,7 @@ public class DbManager {
                 RETURNING id;""";
         try (PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, newFolder.parentId());
-            ps.setInt(2, newFolder.imgId());
+            ps.setInt(2, newFolder.imgId() < 0 ? getDefaultImgId() : newFolder.imgId());
             ps.setString(3, newFolder.folderName());
 
             ps.execute();
