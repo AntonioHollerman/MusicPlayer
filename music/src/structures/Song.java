@@ -2,16 +2,11 @@ package structures;
 
 import content.Content;
 import content.ContentType;
-import db.DbManager;
-import db.DbService;
-import records.SongRow;
 
 import java.nio.file.Path;
 
 public final class Song extends Content {
-    private Path songPath;
-    private boolean isPlaying;
-    private static final DbManager dbConn = DbService.DB_CONNECTION;
+    private final Path songPath;
     /**
      * The Song class represents a song object that can be played.
      *
@@ -19,10 +14,9 @@ public final class Song extends Content {
      * A song has a path to the audio file along with an optional image path, ID, and title.
      * </p>
      */
-    public Song(Path songPath, Path imgPath, String title, int songId) {
-        super(ContentType.SONG, imgPath, title, songId);
+    public Song(Path songPath, int iconId, String title, int songId) {
+        super(ContentType.SONG, iconId, title, songId);
         this.songPath = songPath;
-        isPlaying = false;
     }
 
     /**
@@ -34,76 +28,4 @@ public final class Song extends Content {
         return songPath;
     }
 
-
-    /**
-     * Returns the playing state of the song.
-     *
-     * @return true if the song is currently playing, false otherwise
-     */
-    public boolean isPlaying() {
-        return isPlaying;
-    }
-
-    /**
-     * Starts playing the song audio.
-     * This method does not return a value.
-     * It modifies the state of the song or playlist by starting playback.
-     * </p>
-     */
-    public void play(){
-
-    }
-
-    /**
-     * Stops playing the song audio.
-     * This method does not return a value.
-     * It modifies the state of the song or playlist by starting playback.
-     * </p>
-     */
-    public void pause(){
-
-    }
-
-    /**
-     * Deletes the editable object.
-     *
-     * <p> This method deletes the object, from the folder or playlist it is in.
-     */
-    @Override
-    public void delete() {
-        dbConn.deleteSong(getId());
-    }
-
-
-    /**
-     * Sets the title for the content.
-     *
-     * @param newTitle the title the song changed to
-     */
-    @Override
-    public void setTitle(String newTitle) {
-        this.title = newTitle;
-        dbConn.setSongName(getId(), newTitle);
-    }
-
-    /**
-     * Add icon to file system then make icon the result of new Path
-     *
-     * @param newIcon path to new icon
-     * @return The new path to the content icon image.
-     */
-    @Override
-    public Path setIcon(Path newIcon) {
-        int imgId = dbConn.insertNewImage(newIcon);
-        this.iconPath = dbConn.getImgPath(imgId);
-        dbConn.setSongImg(getId(), imgId);
-        return this.iconPath;
-    }
-
-    @Override
-    public Path setIcon(int imgId) {
-        this.iconPath = dbConn.getImgPath(imgId);
-        dbConn.setSongImg(getId(), imgId);
-        return dbConn.getImgPath(imgId);
-    }
 }

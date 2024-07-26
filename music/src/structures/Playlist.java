@@ -6,12 +6,15 @@ import content.ContentType;
 import db.DbManager;
 import db.DbService;
 
-import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 public final class Playlist extends Content implements ContentContainer {
-    private List<Song> songArr;
+    private final List<Song> songArr;
+    private List<Song> activeArr;
     private int curSongIndex;
     private final int folderId;
+    private boolean isActive;
     private static final DbManager dbConn = DbService.DB_CONNECTION;
 
     /**
@@ -20,9 +23,12 @@ public final class Playlist extends Content implements ContentContainer {
      * <p>
      * A playlist has a name, an image path, a playlist ID, and a folder ID. It can also contain an array of songs.
      */
-    public Playlist(String playlistName, Path imgPath, int playlistId, int folderId) {
-        super(ContentType.PLAYLIST, imgPath, playlistName, playlistId);
+    public Playlist(String playlistName, int iconId, int playlistId, int folderId) {
+        super(ContentType.PLAYLIST, iconId, playlistName, playlistId);
         this.folderId = folderId;
+        this.curSongIndex = 0;
+        this.songArr = new ArrayList<>();
+        this.isActive = false;
     }
 
     /**
@@ -39,8 +45,16 @@ public final class Playlist extends Content implements ContentContainer {
      *
      * @return the array of songs in the playlist
      */
-    public List<Song> getSongArr(){
-        return songArr;
+    public Song[] getSongArr(){
+        return songArr.toArray(Song[]::new);
+    }
+
+    /**
+     * Accesses the active playlist of songs
+     * @return active list of songs, could be null if not activated properly
+     */
+    public List<Song> getActiveArr(){
+        return activeArr;
     }
 
     /**
@@ -55,7 +69,16 @@ public final class Playlist extends Content implements ContentContainer {
      * </p>
      */
     public void shufflePlaylist(){
+        if (activeArr.isEmpty()){
+            return;
+        }
+        List<Song> arrShuffled = new ArrayList<>(activeArr);
+        arrShuffled.remove(curSongIndex);
+        Collections.shuffle(arrShuffled);
 
+        arrShuffled.add(0, activeArr.get(curSongIndex));
+        curSongIndex = 0;
+        activeArr = arrShuffled;
     }
 
     /**
@@ -64,6 +87,9 @@ public final class Playlist extends Content implements ContentContainer {
      * @return the current song in the playlist, or null if there is no current song
      */
     public Song getCurSong(){
+        if (isActive && !activeArr.isEmpty()){
+            return activeArr.get(curSongIndex);
+        }
         return null;
     }
 
@@ -72,8 +98,15 @@ public final class Playlist extends Content implements ContentContainer {
      *
      * @return the next song in the playlist, or null if there is no next song
      */
-    public Song getNextSong(){
-        return null;
+    public Song goNextSong(){
+        if (activeArr.isEmpty()){
+            return null;
+        } else if (activeArr.size() == 1){
+            return activeArr.get(0);
+        } else {
+            curSongIndex = activeArr.size() - 1 == curSongIndex ? 0 : curSongIndex + 1;
+            return activeArr.get(curSongIndex);
+        }
     }
 
     /**
@@ -81,8 +114,15 @@ public final class Playlist extends Content implements ContentContainer {
      *
      * @return the previous song in the playlist, or null if there is no previous song
      */
-    public Song getPrevSong(){
-        return null;
+    public Song goPrevSong(){
+        if (activeArr.isEmpty()){
+            return null;
+        } else if (activeArr.size() == 1){
+            return activeArr.get(0);
+        } else {
+            curSongIndex = curSongIndex == 0 ? activeArr.size() - 1 : curSongIndex - 1;
+            return activeArr.get(curSongIndex);
+        }
     }
 
     /**
@@ -91,7 +131,8 @@ public final class Playlist extends Content implements ContentContainer {
      * @param newSong the new song to be added
      */
     public void addSong(Song newSong){
-
+        songArr.add(newSong);
+        dbConn.addSongToPlaylist(newSong.getId(), folderId);
     }
 
     /**
@@ -99,18 +140,38 @@ public final class Playlist extends Content implements ContentContainer {
      *
      * @param newSongs the list of songs to be added
      */
-    public void addSong(List<Song> newSongs){
+    public void addSong(Song... newSongs){
+        for (Song song : newSongs){
+            addSong(song);
+        }
+    }
 
+    /**
+     * Remove song from Playlist structure and database
+     * @param songId id of song to be removed
+     */
+    public void removeSong(int songId){
+        for (int i = 0; i < songArr.size(); i++){
+            Song song = songArr.get(i);
+            if (song.getId() == songId){
+                dbConn.deleteSongFromPlaylist(songId, getId());
+                songArr.remove(i);
+                break;
+            }
+        }
     }
 
     /**
      * Starts playing the playlist from the specified song. If the songId is not found in the playlist,
      * the playlist will start from the first song.
      *
-     * @param songId the ID of the song to start the playlist from
+     * @param songIndex the index of the song to start the playlist from
      */
-    public void startPlaylist(int songId){
-
+    public Song startPlaylist(int songIndex){
+        curSongIndex = songIndex;
+        isActive = true;
+        activeArr = new ArrayList<>(songArr);
+        return songArr.get(songIndex);
     }
 
     /**
@@ -124,50 +185,13 @@ public final class Playlist extends Content implements ContentContainer {
      * This method does not return a value. It modifies the state of the playlist by setting the current song and starting playback.
      * </p>
      */
-    public void startPlaylist(){
-
+    public Song startPlaylist(){
+        return startPlaylist(0);
     }
 
-
-    /**
-     * Sets the title for the content.
-     *
-     * @param newTitle the title the song changed to
-     */
-    @Override
-    public void setTitle(String newTitle) {
-
-    }
-
-    /**
-     * Deletes the editable object.
-     *
-     * <p> This method deletes the object, from the folder or playlist it is in.
-     */
-    @Override
-    public void delete() {
-
-    }
-
-    /**
-     * Add icon to file system then make icon the result of new Path
-     *
-     * @param newIcon path to new icon
-     * @return The new path to the content icon image.
-     */
-    @Override
-    public Path setIcon(Path newIcon) {
-        int imgId = dbConn.insertNewImage(newIcon);
-        this.iconPath = dbConn.getImgPath(imgId);
-        dbConn.setPlaylistImg(getId(), imgId);
-        return this.iconPath;
-    }
-
-    @Override
-    public Path setIcon(int imgId) {
-        this.iconPath = dbConn.getImgPath(imgId);
-        dbConn.setPlaylistImg(getId(), imgId);
-        return dbConn.getImgPath(imgId);
+    public void stopPlaylist(){
+        isActive = false;
+        activeArr = null;
     }
 
     /**
