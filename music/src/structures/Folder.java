@@ -26,6 +26,10 @@ public final class Folder extends Content implements ContentContainer {
         this.contentList = contentList;
     }
 
+    public Folder(int id, String folderName, int iconId, Folder prevFolder){
+        this(id, folderName, iconId, prevFolder, new ArrayList<>());
+    }
+
     /**
      * Returns the parent folder of the current folder.
      *
