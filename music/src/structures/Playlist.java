@@ -23,11 +23,15 @@ public final class Playlist extends Content implements ContentContainer {
      * <p>
      * A playlist has a name, an image path, a playlist ID, and a folder ID. It can also contain an array of songs.
      */
-    public Playlist(String playlistName, int iconId, int playlistId, int folderId) {
+    public Playlist(String playlistName, int iconId, int playlistId, int folderId){
+        this(playlistName, iconId, playlistId, folderId, new ArrayList<>());
+    }
+
+    public Playlist(String playlistName, int iconId, int playlistId, int folderId, List<Song> songArr){
         super(ContentType.PLAYLIST, iconId, playlistName, playlistId);
         this.folderId = folderId;
         this.curSongIndex = 0;
-        this.songArr = new ArrayList<>();
+        this.songArr = songArr;
         this.isActive = false;
     }
 
