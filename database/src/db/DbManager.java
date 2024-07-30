@@ -99,6 +99,15 @@ public class DbManager {
         }
     }
 
+    public FolderRow getRootFolder(){
+        String sql = "SELECT * FROM FOLDERS WHERE folder_name = 'ROOT'";
+        try (PreparedStatement ps = conn.prepareStatement(sql)){
+            return DbToRecordAPI.toFolders(ps.executeQuery()).get(0);
+        } catch (IndexOutOfBoundsException | SQLException e){
+            e.fillInStackTrace();
+            throw new RuntimeException("Fail to get root folder");
+        }
+    }
     /**
      * Extracts folder from id
      * @param folderId id of folder

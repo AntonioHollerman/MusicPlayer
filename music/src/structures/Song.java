@@ -28,9 +28,4 @@ public final class Song extends Content {
         return songPath;
     }
 
-    /**
-     * Deletes the editable object.
-     *
-     * <p> This method deletes the object, from the folder or playlist it is in.
-     */
 }
