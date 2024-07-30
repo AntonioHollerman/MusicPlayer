@@ -6,6 +6,7 @@ import records.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Path;
 
@@ -237,7 +238,7 @@ public class DbManager {
      *
      * @return the default image path as a Path
      */
-    
+    // TODO: Fix
     public int getDefaultImgId() {
         return 0;
     }
@@ -271,6 +272,23 @@ public class DbManager {
         } catch (SQLException e){
             e.fillInStackTrace();
             throw new RuntimeException("Failed to get newest id");
+        }
+    }
+
+    public List<Integer> getSongPlaylistReferencesIds(int songId){
+        String sql = "SELECT playlist_id FROM songs_mapped WHERE song_id = ?";
+        List<Integer> idsList = new ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, songId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                idsList.add(rs.getInt(1));
+            }
+
+            return idsList;
+        } catch (SQLException e){
+            e.fillInStackTrace();
+            throw new RuntimeException("Fail to get song playlist references");
         }
     }
 

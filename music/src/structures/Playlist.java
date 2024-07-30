@@ -25,6 +25,7 @@ public final class Playlist extends Content implements ContentContainer {
      */
     public Playlist(String playlistName, int iconId, int playlistId, int folderId){
         this(playlistName, iconId, playlistId, folderId, new ArrayList<>());
+        StructuresReferences.playlists.add(this);
     }
 
     public Playlist(String playlistName, int iconId, int playlistId, int folderId, List<Song> songArr){
@@ -196,6 +197,23 @@ public final class Playlist extends Content implements ContentContainer {
     public void stopPlaylist(){
         isActive = false;
         activeArr = null;
+    }
+
+    /**
+     * Deletes the editable object.
+     *
+     * <p> This method deletes the object, from the folder or playlist it is in.
+     */
+    @Override
+    public void delete() {
+        dbConn.deletePlaylist(getId());
+        for (Folder folder : StructuresReferences.folders){
+            if (folder.getId() == folderId){
+                folder.removePlaylist(getId());
+                break;
+            }
+        }
+        StructuresReferences.playlists.remove(this);
     }
 
     /**

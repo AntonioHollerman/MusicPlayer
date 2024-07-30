@@ -5,7 +5,7 @@ import db.DbService;
 
 import java.nio.file.Path;
 
-public non-sealed class Content implements Editable {
+public abstract non-sealed class Content implements Editable {
     private final ContentType type;
     private final int id;
     private int iconId;
@@ -71,20 +71,6 @@ public non-sealed class Content implements Editable {
             case SONG -> dbConn.setSongImg(id, iconId);
             case PLAYLIST -> dbConn.setPlaylistImg(id, iconId);
             case FOLDER -> dbConn.setFolderImg(id, iconId);
-        }
-    }
-
-    /**
-     * Deletes the editable object.
-     *
-     * <p> This method deletes the object, from the folder or playlist it is in.
-     */
-    @Override
-    public void delete() {
-        switch (type){
-            case SONG -> dbConn.deleteSong(id);
-            case PLAYLIST -> dbConn.deletePlaylist(id);
-            case FOLDER -> dbConn.deleteFolder(id);
         }
     }
 

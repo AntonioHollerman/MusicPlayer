@@ -24,6 +24,7 @@ public final class Folder extends Content implements ContentContainer {
         super(ContentType.FOLDER, iconId, folderName, id);
         this.prevFolder = prevFolder;
         this.contentList = contentList;
+        StructuresReferences.folders.add(this);
     }
 
     public Folder(int id, String folderName, int iconId, Folder prevFolder){
@@ -191,6 +192,8 @@ public final class Folder extends Content implements ContentContainer {
     @Override
     public void delete() {
         dbConn.deleteFolder(getId());
+        prevFolder.removeFolder(getId());
+        StructuresReferences.folders.remove(this);
     }
 
     /**
