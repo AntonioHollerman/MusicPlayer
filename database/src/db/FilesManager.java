@@ -70,13 +70,15 @@ class FilesManager {
      * @return the new path to the song or null if exception caught
      */
     public static Path addSong(Path from){
-        try (FilesIndex songIndex = FilesIndex.of(SONGS_INDEX)){
-            Path to = SONGS_FOLDER_PATH.resolve(Path.of("SONG_" + songIndex.getNextIndex()));
-            Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
-            return to;
-        } catch (IOException | ClassNotFoundException e){
-            e.fillInStackTrace();
-            throw new RuntimeException("Could not add song");
+        synchronized (SONGS_INDEX){
+            try (FilesIndex songIndex = FilesIndex.of(SONGS_INDEX)){
+                Path to = SONGS_FOLDER_PATH.resolve(Path.of("SONG_" + songIndex.getNextIndex()));
+                Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
+                return to;
+            } catch (IOException | ClassNotFoundException e){
+                e.fillInStackTrace();
+                throw new RuntimeException("Could not add song");
+            }
         }
     }
 
@@ -87,13 +89,15 @@ class FilesManager {
      * @return the new path to the image or null if exception caught
      */
     public static Path addImg(Path from){
-        try (FilesIndex imagesIndex = FilesIndex.of(IMAGES_INDEX)){
-            Path to = IMAGES_FOLDER_PATH.resolve(Path.of("IMAGE_" + imagesIndex.getNextIndex()));
-            Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
-            return to;
-        } catch (IOException | ClassNotFoundException e){
-            e.fillInStackTrace();
-            throw new RuntimeException("Failed to add image");
+        synchronized (IMAGES_INDEX){
+            try (FilesIndex imagesIndex = FilesIndex.of(IMAGES_INDEX)){
+                Path to = IMAGES_FOLDER_PATH.resolve(Path.of("IMAGE_" + imagesIndex.getNextIndex()));
+                Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
+                return to;
+            } catch (IOException | ClassNotFoundException e){
+                e.fillInStackTrace();
+                throw new RuntimeException("Failed to add image");
+            }
         }
     }
 
