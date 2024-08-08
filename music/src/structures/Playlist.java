@@ -6,6 +6,7 @@ import content.ContentType;
 import db.DbManager;
 import db.DbService;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -130,6 +131,60 @@ public final class Playlist extends Content implements ContentContainer {
         }
     }
 
+    /**
+     * Adds new song instance to database then add new instance to the working playlist
+     * @param title Title of song
+     * @param songPath Path user provide to play song
+     * @return boolean of if load was successful, fails if file incorrect type
+     */
+    public boolean loadSong(String title, Path songPath){
+        return loadSong(
+                title,
+                songPath,
+                dbConn.getDefaultImgId()
+        );
+    }
+
+    /**
+     * Adds new song instance to database then add new instance to the working playlist
+     * @param title Title of song
+     * @param songPath Path user provide to play song
+     * @param iconPath Path user provide of what icon to display
+     * @return boolean of if load was successful, fails if file incorrect type
+     */
+    public boolean loadSong(String title, Path songPath, Path iconPath){
+        return loadSong(
+                title,
+                songPath,
+                dbConn.insertNewImage(iconPath)
+        );
+    }
+
+    /**
+     * Adds new song instance to database then add new instance to the working playlist
+     * @param title Title of song
+     * @param songPath Path user provide to play song
+     * @param iconId ID of what icon to display
+     * @return boolean of if load was successful, fails if file incorrect type
+     */
+    public boolean loadSong(String title, Path songPath, int iconId){
+        try {
+            Path newSongPath = dbConn.loadSongPath(songPath);
+            addSong(new Song(
+                    newSongPath,
+                    iconId,
+                    title,
+                    dbConn.insertNewSong(
+                            title,
+                            newSongPath,
+                            iconId
+                    )
+            ));
+            return true;
+        } catch (RuntimeException e){
+            return false;
+        }
+    }
     /**
      * Adds a new song to the playlist.
      *
