@@ -320,7 +320,7 @@ public class DbManager {
      * @param imgPath path to be added
      * @return the id of added image
      */
-    public int insertNewImage(Path imgPath){
+    public int insertNewImage(Path imgPath) throws InvalidFileTypeException{
         String sql = """
                 INSERT INTO images (image_path)
                 VALUES (?)
@@ -338,6 +338,10 @@ public class DbManager {
         }
     }
 
+    public Path loadSongPath(Path songPath) throws InvalidFileTypeException{
+        String fileName = songPath.getFileName().toString().toLowerCase();
+        return FilesManager.addSong(songPath);
+    }
     /**
      * Inserts a new song into the database.
      *

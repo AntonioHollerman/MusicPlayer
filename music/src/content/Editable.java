@@ -20,7 +20,7 @@ public sealed interface Editable permits Content {
      * Creates new icon image and sets icon id to it
      * @param path path to new image to add
      */
-    void setIcon(Path path);
+    boolean setIcon(Path path);
 
     /**
      * Updates content image path

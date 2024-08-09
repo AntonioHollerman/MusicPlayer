@@ -5,6 +5,7 @@ import content.ContentContainer;
 import content.ContentType;
 import db.DbManager;
 import db.DbService;
+import db.InvalidFileTypeException;
 import records.FolderRow;
 import records.PlaylistRow;
 
@@ -46,21 +47,17 @@ public final class Folder extends Content implements ContentContainer {
      *
      * <p> The playlist is added to the playlistArr list of the current folder.
      */
-    public void addPlaylist(String playlistName, Path imgPath, List<Content> contentList){
-        int imgId = dbConn.insertNewImage(imgPath);
-        contentList.add(
-                new Playlist(
-                        playlistName,
-                        imgId,
-                        dbConn.insertNewPlaylist(new PlaylistRow(
-                                -1,
-                                getId(),
-                                imgId,
-                                playlistName
-                        )),
-                        getId()
-                )
-        );
+    public boolean addPlaylist(String playlistName, Path imgPath, List<Content> contentList){
+        try {
+            addPlaylist(
+                    playlistName,
+                    dbConn.insertNewImage(imgPath),
+                    contentList
+            );
+            return true;
+        } catch (InvalidFileTypeException e){
+            return false;
+        }
     }
 
     /**
@@ -100,20 +97,17 @@ public final class Folder extends Content implements ContentContainer {
      * to the folderArr list of the current folder.
      * </p>
      */
-    public void addFolder(String folderName, Path imgPath, List<Content> contentList){
-        int imgId = dbConn.insertNewImage(imgPath);
-        contentList.add(new Folder(
-                dbConn.insertNewFolder(new FolderRow(
-                        -1,
-                        getId(),
-                        imgId,
-                        folderName
-                )),
-                folderName,
-                imgId,
-                this,
-                new ArrayList<>(contentList)
-        ));
+    public boolean addFolder(String folderName, Path imgPath, List<Content> contentList){
+        try {
+            addFolder(
+                    folderName,
+                    dbConn.insertNewImage(imgPath),
+                    contentList
+            );
+            return true;
+        } catch (InvalidFileTypeException e){
+            return false;
+        }
     }
 
     /**

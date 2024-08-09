@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 /**
  * A class that help connect the database to the folders holding song/image files. To be used files in the same
@@ -14,6 +15,9 @@ class FilesManager {
     public static final Path IMAGES_FOLDER_PATH = Path.of(".ImagesFolder\\");
     public static final Path SONGS_INDEX = SONGS_FOLDER_PATH.resolve(Path.of("Index.ser"));
     public static final Path IMAGES_INDEX = IMAGES_FOLDER_PATH.resolve(Path.of("Index.ser"));
+
+    public static final List<String> VALID_SONG_PATHS = List.of(".mp3", ".aac", ".wav", ".aiff");
+    public static final List<String> VALID_IMAGE_PATHS = List.of(".jpeg", ".jpg", ".png", ".gif", ".bmp", ".wbmp");
 
     static {
         try{
@@ -63,16 +67,42 @@ class FilesManager {
         }
     }
 
+    private static String spliceFileType(Path path){
+        String fileName = path.getFileName().toString();
+        int startIndex;
+        if ((startIndex = fileName.lastIndexOf('.')) < 0){
+            return "INVALID";
+        }
+        return fileName.substring(startIndex);
+    }
+    private static boolean isValidSongPath(Path songPath){
+        String fileType = spliceFileType(songPath);
+        if (fileType.equals("INVALID")){
+            return false;
+        }
+        return VALID_SONG_PATHS.contains(fileType);
+    }
+
+    private static boolean isValidImgPath(Path imgPath){
+        String fileType = spliceFileType(imgPath);
+        if (fileType.equals("INVALID")){
+            return false;
+        }
+        return VALID_IMAGE_PATHS.contains(fileType);
+    }
     /**
      * Adds a new song to the Songs folder
      *
      * @param from the path to the song file
      * @return the new path to the song or null if exception caught
      */
-    public static Path addSong(Path from){
+    public static Path addSong(Path from) throws InvalidFileTypeException{
+        if (!isValidSongPath(from)){
+            throw new InvalidFileTypeException("Fail to load song path to db");
+        }
         synchronized (SONGS_INDEX){
             try (FilesIndex songIndex = FilesIndex.of(SONGS_INDEX)){
-                Path to = SONGS_FOLDER_PATH.resolve(Path.of("SONG_" + songIndex.getNextIndex()));
+                Path to = SONGS_FOLDER_PATH.resolve(Path.of("SONG_" + songIndex.getNextIndex() + spliceFileType(from)));
                 Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
                 return to;
             } catch (IOException | ClassNotFoundException e){
@@ -88,10 +118,13 @@ class FilesManager {
      * @param from path to the image file
      * @return the new path to the image or null if exception caught
      */
-    public static Path addImg(Path from){
+    public static Path addImg(Path from) throws InvalidFileTypeException{
+        if (!isValidImgPath(from)){
+            throw new InvalidFileTypeException("Fail to load song path to db");
+        }
         synchronized (IMAGES_INDEX){
             try (FilesIndex imagesIndex = FilesIndex.of(IMAGES_INDEX)){
-                Path to = IMAGES_FOLDER_PATH.resolve(Path.of("IMAGE_" + imagesIndex.getNextIndex()));
+                Path to = IMAGES_FOLDER_PATH.resolve(Path.of("IMAGE_" + imagesIndex.getNextIndex() + spliceFileType(from)));
                 Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
                 return to;
             } catch (IOException | ClassNotFoundException e){
