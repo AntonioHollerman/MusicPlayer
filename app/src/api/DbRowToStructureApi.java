@@ -1,6 +1,5 @@
 package api;
 
-import content.Content;
 import db.DbManager;
 import db.DbService;
 import records.FolderRow;

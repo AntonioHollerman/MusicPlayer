@@ -2,6 +2,7 @@ package content;
 
 import db.DbManager;
 import db.DbService;
+import db.InvalidFileTypeException;
 
 import java.nio.file.Path;
 
@@ -57,8 +58,13 @@ public abstract non-sealed class Content implements Editable {
      * Creates new icon image and sets icon id to it
      * @param path path to new image to add
      */
-    public final void setIcon(Path path){
-        setIcon(dbConn.insertNewImage(path));
+    public final boolean setIcon(Path path){
+        try {
+            setIcon(dbConn.insertNewImage(path));
+            return true;
+        } catch (InvalidFileTypeException e){
+            return false;
+        }
     }
 
     /**

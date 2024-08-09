@@ -5,6 +5,7 @@ import content.ContentContainer;
 import content.ContentType;
 import db.DbManager;
 import db.DbService;
+import db.InvalidFileTypeException;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -153,11 +154,15 @@ public final class Playlist extends Content implements ContentContainer {
      * @return boolean of if load was successful, fails if file incorrect type
      */
     public boolean loadSong(String title, Path songPath, Path iconPath){
-        return loadSong(
-                title,
-                songPath,
-                dbConn.insertNewImage(iconPath)
-        );
+        try{
+            return loadSong(
+                    title,
+                    songPath,
+                    dbConn.insertNewImage(iconPath)
+            );
+        } catch (InvalidFileTypeException e){
+            return false;
+        }
     }
 
     /**
@@ -181,7 +186,7 @@ public final class Playlist extends Content implements ContentContainer {
                     )
             ));
             return true;
-        } catch (RuntimeException e){
+        } catch (InvalidFileTypeException e){
             return false;
         }
     }
