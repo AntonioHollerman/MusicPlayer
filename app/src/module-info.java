@@ -1,5 +1,5 @@
 module app {
     requires database;
-    requires gui;
+    requires gui.graphics;
     requires music;
 }
