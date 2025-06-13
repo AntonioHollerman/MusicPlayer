@@ -1,4 +1,4 @@
-package gui.graphics;
+package gui.graphics.test;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
