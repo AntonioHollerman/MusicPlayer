@@ -13,7 +13,7 @@ public class SQLiteManager extends DbManager{
         boolean dbExists = Files.exists(abDbPath);
 
         if (!dbExists){
-                createTables();
+            createTables();
         }
     }
 }
