@@ -11,7 +11,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../packages/sqlite/slf4j-api-2.0.16.jar!/" />
+          <root url="jar://E:/Java/Libraries/sqlite/slf4j-api-2.0.16.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -20,7 +20,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../packages/sqlite/slf4j-simple-2.0.16.jar!/" />
+          <root url="jar://E:/Java/Libraries/sqlite/slf4j-simple-2.0.16.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -29,7 +29,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../packages/sqlite/sqlite-jdbc-7.0.182.jar!/" />
+          <root url="jar://E:/Java/Libraries/sqlite/sqlite-jdbc-7.0.182.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

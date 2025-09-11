@@ -1,6 +1,7 @@
 module app {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
     requires database;
     requires music;
