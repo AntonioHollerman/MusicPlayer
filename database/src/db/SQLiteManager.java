@@ -6,14 +6,17 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SQLiteManager extends DbManager{
+    private static final Path dbPath = Path.of("data/Music.db").toAbsolutePath();
+
     protected SQLiteManager() throws SQLException {
-        super(DriverManager.getConnection("jdbc:sqlite:C:\\JavaProjects\\MusicPlayer\\Music.db"));
+        super(DriverManager.getConnection("jdbc:sqlite:" + Path.of("data/Music.db").toAbsolutePath()));
 
-        Path abDbPath = Path.of("Music.db").toAbsolutePath();
-        boolean dbExists = Files.exists(abDbPath);
+        boolean dbExists = Files.exists(dbPath);
 
-        if (!dbExists){
+        if (dbExists){
             createTables();
+        } else {
+            throw new SQLException("Database does not exist");
         }
     }
 }

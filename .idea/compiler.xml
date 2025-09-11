@@ -10,7 +10,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="app" target="17" />
-      <module name="graphics" target="17" />
       <module name="music" target="17" />
     </bytecodeTargetLevel>
   </component>

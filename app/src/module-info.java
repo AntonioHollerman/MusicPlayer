@@ -1,5 +1,12 @@
 module app {
+    requires javafx.controls;
+    requires javafx.fxml;
+
     requires database;
-    requires graphics;
     requires music;
+
+
+    opens application to javafx.fxml;
+    opens controllers to javafx.fxml;
+    exports application;
 }

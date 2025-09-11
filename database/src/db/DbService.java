@@ -1,5 +1,6 @@
 package db;
 
+import java.nio.file.Path;
 import java.sql.SQLException;
 
 // Hosts public database
@@ -12,5 +13,9 @@ public class DbService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Path.of("data").toAbsolutePath());
     }
 }
