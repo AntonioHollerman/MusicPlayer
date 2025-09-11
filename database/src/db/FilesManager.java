@@ -11,8 +11,8 @@ import java.util.List;
  * package.
  */
 class FilesManager {
-    public static final Path SONGS_FOLDER_PATH = Path.of(".SongsFolder\\");
-    public static final Path IMAGES_FOLDER_PATH = Path.of(".ImagesFolder\\");
+    public static final Path SONGS_FOLDER_PATH = Path.of("data\\.SongsFolder\\");
+    public static final Path IMAGES_FOLDER_PATH = Path.of("data\\.ImagesFolder\\");
     public static final Path SONGS_INDEX = SONGS_FOLDER_PATH.resolve(Path.of("Index.ser"));
     public static final Path IMAGES_INDEX = IMAGES_FOLDER_PATH.resolve(Path.of("Index.ser"));
 
@@ -24,9 +24,17 @@ class FilesManager {
             if (!Files.exists(SONGS_FOLDER_PATH)){
                 Files.createDirectories(SONGS_FOLDER_PATH);
             }
+
+            if (!Files.exists(IMAGES_FOLDER_PATH)){
+                Files.createDirectories(IMAGES_FOLDER_PATH);
+            }
         } catch (IOException e){
             e.fillInStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(DbService.DB_CONNECTION);
     }
 
     // Keep track oh what next increment to give the next file
@@ -58,6 +66,7 @@ class FilesManager {
         public int getNextIndex(){
             return index++;
         }
+
         @Override
         public void close() throws IOException {
             Files.createDirectories(path.getParent());
